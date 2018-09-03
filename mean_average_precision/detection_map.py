@@ -189,12 +189,35 @@ class DetectionMAP:
         ax.step(recalls, precisions, color='b', alpha=0.2,
                 where='post')
         ax.fill_between(recalls, precisions, step='post', alpha=0.2,
-                        color='b')
+                        color='g')
         ax.set_ylim([0.0, 1.05])
         ax.set_xlim([0.0, 1.0])
         ax.set_xlabel('Recall')
         ax.set_ylabel('Precision')
         ax.set_title('cls {0:} : AUC={1:0.2f}'.format(class_index, average_precision))
+
+    def myPlot(self, labels, interpolated=True):
+        ax = plt.subplot(111)
+        ax.grid(linestyle='dashdot')
+        ax.set_ylim([-0.02, 1.02])
+        ax.set_xlim([-0.02, 1.02])
+        
+        plt.ylabel('Precision')
+        plt.xlabel('Recall')
+
+        for i in range(self.n_class):
+            precisions, recalls = self.compute_precision_recall_(i, interpolated)
+
+            precisions.insert(0,0)
+            recalls.insert(0,1)
+
+            precisions.append(1)
+            recalls.append(0)
+
+            plt.plot(precisions, recalls, '-+', label=labels[i])
+
+        legend = plt.legend(loc='best', fancybox=True, shadow=True, ncol=2)
+        legend.get_frame().set_facecolor('#DDDDDD')
 
     def plot(self, interpolated=True):
         """
