@@ -31,7 +31,7 @@ def jaccard(box_a, box_b):
     """
     Compute the jaccard overlap of two sets of boxes.  The jaccard overlap
     is simply the intersection over union of two boxes.  Here we operate on
-    ground truth boxes and default boxes.
+    ground truth boxes and default boxes. [x1, y1, x2, y2]
     E.g.:
         A ∩ B / A ∪ B = A ∩ B / (area(A) + area(B) - A ∩ B)
     Args:
